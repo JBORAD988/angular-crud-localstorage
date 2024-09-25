@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>Angular CRUD </h1>
+
+  <form [formGroup]="form" (ngSubmit)="saveItem()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" />
+      <div *ngIf="hasError('name', 'required')" class="error">
+        Name is required
+      </div>
+      <div *ngIf="hasError('name', 'minlength')" class="error">
+        Name must be at least 3 characters long
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input id="description" type="text" formControlName="description" />
+      <div *ngIf="hasError('description', 'required')" class="error">
+        Description is required
+      </div>
+      <div *ngIf="hasError('description', 'maxlength')" class="error">
+        Description can't exceed 100 characters
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">
+      {{ isEditMode ? 'Update' : 'Create' }}
+    </button>
+    <button type="button" (click)="resetForm()">Reset</button>
+  </form>
+
+
+  <div class="item-list">
+    <ul>
+      <li *ngFor="let item of items">
+        {{ item.name }} - {{ item.description }}
+        <button (click)="editItem(item)">Edit</button>
+        <button (click)="deleteItem(item.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+</div>
